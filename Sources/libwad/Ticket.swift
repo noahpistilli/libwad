@@ -9,7 +9,7 @@ import Foundation
 import CryptoSwift
 
 /// Ticket defines the binary structure of a given ticket file.
-struct Ticket: Codable {
+public struct Ticket: Codable {
     let SignatureType: u32
     let Signature: [byte]
     let Padding: [byte]
@@ -94,9 +94,9 @@ struct Ticket: Codable {
 }
 
 /// TimeLimitEntry holds a time limit entry for a title.
-struct TimeLimitEntry: Codable {
-    let code: uint32
-    let limit: uint32
+public struct TimeLimitEntry: Codable {
+    let code: u32
+    let limit: u32
 }
 
 extension Ticket {

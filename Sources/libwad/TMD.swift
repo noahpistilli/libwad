@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TMD: Codable {
+public struct TMD: Codable {
     let SignatureType: u32
     let Signature: [byte]
     let Padding: [byte]
@@ -109,7 +109,7 @@ struct TMD: Codable {
     }
 }
 
-struct ContentRecord: Codable {
+public struct ContentRecord: Codable {
     let ID: u32
     let Index: u16
     let ContentType: u16
