@@ -12,17 +12,17 @@ internal var pointer = 32
 
 /// Describes the binary structure of a WAD file
 public struct WAD: Codable {
-    var Header: WADHeader
-    var CertificateChain: Data
-    var CertificateRevocationList: Data
-    var Ticket: Ticket
-    var TMD: TMD
-    var Contents: [Content]
-    var Meta: Data
+    public var Header: WADHeader
+    public var CertificateChain: Data
+    public var CertificateRevocationList: Data
+    public var Ticket: Ticket
+    public var TMD: TMD
+    public var Contents: [Content]
+    public var Meta: Data
 }
 
 /// Struct of the WADHeader
-struct WADHeader: Codable {
+public struct WADHeader: Codable {
     let HeaderSize: u32
     let WADType: u32
     let CertificateSize: u32

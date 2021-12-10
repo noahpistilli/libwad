@@ -8,7 +8,7 @@
 import Foundation
 import CryptoSwift
 
-struct Content: Codable {
+public struct Content: Codable {
     var contentRecord: ContentRecord
     var rawData: Data
 }
@@ -48,7 +48,7 @@ extension WAD {
 }
 
 extension Content {
-    public mutating func DecryptData(titleKey: [byte]) throws {
+    public mutating func DecryptData(titleKey: [uint8]) throws {
         let content = self.contentRecord
         
         // Create the IV based on the content index
@@ -70,7 +70,7 @@ extension Content {
         self.rawData = Data(bytes: decryptedData, count: Int(content.Size.bigEndian))
     }
     
-    public mutating func EncryptData(titleKey: [byte]) throws {
+    public mutating func EncryptData(titleKey: [uint8]) throws {
         var content = self.contentRecord
         
         // Create the IV based on the content index
