@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum KeyTypes: byte, Codable {
+public enum KeyTypes: UInt8, Codable {
     case common, korean, vWii
 }
 

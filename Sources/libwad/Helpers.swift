@@ -19,7 +19,7 @@ typealias u32 = UInt32
 /// Alias to Uint64; 8 bytes in size
 typealias u64 = UInt64
 
-enum WADType: u32 {
+public enum WADType: UInt32 {
     case WADTypeCommon = 0x49730000
     case WADTypeBoot = 0x69620000
     case WADTypeUnknown = 0x426b000

@@ -8,10 +8,10 @@
 import Foundation
 
 /// Variable that stores our position in the file
-var pointer = 32
+internal var pointer = 32
 
 /// Describes the binary structure of a WAD file
-struct WAD: Codable {
+public struct WAD: Codable {
     var Header: WADHeader
     var CertificateChain: Data
     var CertificateRevocationList: Data
@@ -23,19 +23,19 @@ struct WAD: Codable {
 
 /// Struct of the WADHeader
 struct WADHeader: Codable {
-    let HeaderSize: uint32
-    let WADType: uint32
-    let CertificateSize: uint32
-    let CRLSize: uint32
-    let TicketSize: uint32
-    let TMDSize: uint32
-    let DataSize: uint32
-    let MetaSize: uint32
+    let HeaderSize: u32
+    let WADType: u32
+    let CertificateSize: u32
+    let CRLSize: u32
+    let TicketSize: u32
+    let TMDSize: u32
+    let DataSize: u32
+    let MetaSize: u32
 }
 
 /// Reads data from the WAD and returns the WAD object
 /// - parameter data: Data object to read from
-func LoadWAD(data: Data) throws -> WAD {
+public func LoadWAD(data: Data) throws -> WAD {
     let header = readWadHeader(data)
     
     // The header must be 32 bytes
@@ -98,7 +98,7 @@ func readWadHeader(_ data: Data) -> WADHeader {
 }
 
 extension WAD {
-    func GetHeader() -> Data {
+    public func GetHeader() -> Data {
         let header = self.Header
         var byteArray: [byte] = []
         
@@ -114,7 +114,7 @@ extension WAD {
         return Data(bytes: &byteArray, count: byteArray.count)
     }
     
-    mutating func GetWAD(wadType: WADType) throws -> Data {
+    public mutating func GetWAD(wadType: WADType) throws -> Data {
         let ticket = try self.GetTicket()
         
         // Here is a good time to update our TMD

@@ -15,7 +15,7 @@ struct Content: Codable {
 
 
 extension WAD {
-    mutating func LoadData(data: Data) {
+    public mutating func LoadData(data: Data) {
         let contentRecords = self.TMD.ContentRecords
         var contents: [Content] = []
         pointer += getPadding(size: pointer)
@@ -36,7 +36,7 @@ extension WAD {
     }
     
     /// Returns the contents padded
-    func GetData() -> Data {
+    public func GetData() -> Data {
         var data: Data = Data()
         
         for content in self.Contents {
@@ -48,7 +48,7 @@ extension WAD {
 }
 
 extension Content {
-    mutating func DecryptData(titleKey: [byte]) throws {
+    public mutating func DecryptData(titleKey: [byte]) throws {
         let content = self.contentRecord
         
         // Create the IV based on the content index
@@ -70,7 +70,7 @@ extension Content {
         self.rawData = Data(bytes: decryptedData, count: Int(content.Size.bigEndian))
     }
     
-    mutating func EncryptData(titleKey: [byte]) throws {
+    public mutating func EncryptData(titleKey: [byte]) throws {
         var content = self.contentRecord
         
         // Create the IV based on the content index

@@ -147,7 +147,7 @@ extension Ticket {
 
 extension WAD {
     /// Returns the Ticket data in Data
-    func GetTicket() throws -> Data {
+    public func GetTicket() throws -> Data {
         var ticket = self.Ticket
         try ticket.encryptKey()
         
@@ -184,7 +184,7 @@ extension WAD {
     }
     
     /// Loads a Ticket into the WAD struct. Useful for replacing preexisting tickets in WAD's
-    mutating func LoadTicket(data: Data) throws {
+    public mutating func LoadTicket(data: Data) throws {
         // Store current pointer
         let currentPointer = pointer
         pointer = 0

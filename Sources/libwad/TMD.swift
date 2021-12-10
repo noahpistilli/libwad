@@ -119,7 +119,7 @@ struct ContentRecord: Codable {
 
 extension WAD {
     /// Returns the TMD data in Data
-    func GetTMD() -> Data {
+    public func GetTMD() -> Data {
         let tmd = self.TMD
         
         var dataArray: [byte] = []
@@ -161,7 +161,7 @@ extension WAD {
     }
     
     /// Loads a TMD into the WAD struct. Useful for replacing preexisting TMD's in WAD's
-    mutating func LoadTMD(data: Data) {
+    public mutating func LoadTMD(data: Data) {
         // Store current pointer
         let currentPointer = pointer
         pointer = 0
