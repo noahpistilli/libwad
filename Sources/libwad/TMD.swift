@@ -8,31 +8,31 @@
 import Foundation
 
 public struct TMD: Codable {
-    let SignatureType: u32
-    let Signature: [byte]
-    let Padding: [byte]
-    let Issuer: [byte]
-    let FileVersion: byte
-    let CACRLVersion: byte
-    let SignerCRLVersion: byte
-    var IsvWii: byte
-    let SystemVersionHigh: u32
-    let SystemVersionLow: u32
-    var TitleID: [byte]
-    let TitleType: u32
-    let GroupID: u16
-    let Unknown: u16
-    var Region: u16
-    let Ratings: [byte]
-    let Reserved: [byte]
-    let IPCMask: [byte]
-    let Reserved2: [byte]
-    let AccessRightsFlags: u32
-    var TitleVersion: u16
-    var NumberOfContents: u16
-    let BootIndex: u16
-    let Padding2: u16
-    var ContentRecords: [ContentRecord]
+    public var SignatureType: uint32
+    public var Signature: [uint8]
+    public var Padding: [uint8]
+    public var Issuer: [uint8]
+    public var FileVersion: uint8
+    public var CACRLVersion: uint8
+    public var SignerCRLVersion: uint8
+    public var IsvWii: uint8
+    public var SystemVersionHigh: uint32
+    public var SystemVersionLow: uint32
+    public var TitleID: [uint8]
+    public var TitleType: uint32
+    public var GroupID: uint16
+    public var Unknown: uint16
+    public var Region: uint16
+    public var Ratings: [uint8]
+    public var Reserved: [uint8]
+    public var IPCMask: [uint8]
+    public var Reserved2: [uint8]
+    public var AccessRightsFlags: uint32
+    public var TitleVersion: uint16
+    public var NumberOfContents: uint16
+    public var BootIndex: uint16
+    public var Padding2: uint16
+    public var ContentRecords: [ContentRecord]
     
     init(data: Data) {
         self.SignatureType = readUint32(data, at: pointer)
@@ -91,7 +91,7 @@ public struct TMD: Codable {
             // Raw pointer issues with u64 led to this
             let sizeArray = readBytes(data, length: 8, at: pointer+8)
             let sizeRawData = Data(bytes: sizeArray, count: 8)
-            let size = u64(littleEndian: sizeRawData.withUnsafeBytes { $0.pointee })
+            let size = uint64(littleEndian: sizeRawData.withUnsafeBytes { $0.pointee })
 
             array.append(
                 ContentRecord(
@@ -110,11 +110,11 @@ public struct TMD: Codable {
 }
 
 public struct ContentRecord: Codable {
-    let ID: u32
-    let Index: u16
-    let ContentType: u16
-    var Size: u64
-    var Hash: [byte]
+    public var ID: uint32
+    public var Index: uint16
+    public var ContentType: uint16
+    public var Size: uint64
+    public var Hash: [uint8]
 }
 
 extension WAD {
@@ -122,7 +122,7 @@ extension WAD {
     public func GetTMD() -> Data {
         let tmd = self.TMD
         
-        var dataArray: [byte] = []
+        var dataArray: [uint8] = []
         
         dataArray += withUnsafeBytes(of: tmd.SignatureType) { Array($0) }
         dataArray += tmd.Signature

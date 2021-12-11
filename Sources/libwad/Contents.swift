@@ -9,8 +9,8 @@ import Foundation
 import CryptoSwift
 
 public struct Content: Codable {
-    var contentRecord: ContentRecord
-    var rawData: Data
+    public var contentRecord: ContentRecord
+    public var rawData: Data
 }
 
 
@@ -52,10 +52,10 @@ extension Content {
         let content = self.contentRecord
         
         // Create the IV based on the content index
-        var iv: [byte] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        var iv: [uint8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         
-        iv[0] = byte(content.Index.bigEndian >> 8)
-        iv[1] = byte(content.Index.bigEndian & 0xFF)
+        iv[0] = uint8(content.Index.bigEndian >> 8)
+        iv[1] = uint8(content.Index.bigEndian & 0xFF)
         
         let decrypter = try AES(key: titleKey, blockMode: CBC(iv: iv))
         let decryptedData = try decrypter.decrypt(self.rawData.bytes)
@@ -74,10 +74,10 @@ extension Content {
         var content = self.contentRecord
         
         // Create the IV based on the content index
-        var iv: [byte] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        var iv: [uint8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         
-        iv[0] = byte(content.Index.bigEndian >> 8)
-        iv[1] = byte(content.Index.bigEndian & 0xFF)
+        iv[0] = uint8(content.Index.bigEndian >> 8)
+        iv[1] = uint8(content.Index.bigEndian & 0xFF)
         
         let encrpyter = try AES(key: titleKey, blockMode: CBC(iv: iv))
         let encryptedData = try encrpyter.encrypt(self.rawData.bytes)
@@ -85,7 +85,7 @@ extension Content {
         let hash = encryptedData.sha1()
 
         content.Hash = hash
-        content.Size = u64(encryptedData.count)
+        content.Size = uint64(encryptedData.count)
         self.rawData = Data(bytes: encryptedData, count: Int(content.Size.bigEndian))
     }
 }

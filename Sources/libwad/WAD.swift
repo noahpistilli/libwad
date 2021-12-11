@@ -23,14 +23,14 @@ public struct WAD: Codable {
 
 /// Struct of the WADHeader
 public struct WADHeader: Codable {
-    let HeaderSize: u32
-    let WADType: u32
-    let CertificateSize: u32
-    let CRLSize: u32
-    let TicketSize: u32
-    let TMDSize: u32
-    let DataSize: u32
-    let MetaSize: u32
+    public var HeaderSize: uint32
+    public var WADType: uint32
+    public var CertificateSize: uint32
+    public var CRLSize: uint32
+    public var TicketSize: uint32
+    public var TMDSize: uint32
+    public var DataSize: uint32
+    public var MetaSize: uint32
 }
 
 /// Reads data from the WAD and returns the WAD object
@@ -100,7 +100,7 @@ func readWadHeader(_ data: Data) -> WADHeader {
 extension WAD {
     public func GetHeader() -> Data {
         let header = self.Header
-        var byteArray: [byte] = []
+        var byteArray: [uint8] = []
         
         byteArray += withUnsafeBytes(of: header.HeaderSize.bigEndian) { Array($0) }
         byteArray += withUnsafeBytes(of: header.WADType.bigEndian) { Array($0) }
@@ -132,19 +132,19 @@ extension WAD {
         let header = WADHeader(
             HeaderSize: 32,
             WADType: wadType.rawValue,
-            CertificateSize: u32(self.CertificateChain.count),
-            CRLSize: u32(self.CertificateRevocationList.count),
-            TicketSize: u32(ticket.count),
-            TMDSize: u32(tmd.count),
-            DataSize: u32(contents.count),
-            MetaSize: u32(self.Meta.count)
+            CertificateSize: uint32(self.CertificateChain.count),
+            CRLSize: uint32(self.CertificateRevocationList.count),
+            TicketSize: uint32(ticket.count),
+            TMDSize: uint32(tmd.count),
+            DataSize: uint32(contents.count),
+            MetaSize: uint32(self.Meta.count)
         )
         
         self.Header = header
         let headerContents = self.GetHeader()
         
         // We can now append our data to an array then to Data
-        var wad: [byte] = []
+        var wad: [uint8] = []
         
         wad += pad(data: headerContents).bytes
         wad += pad(data: self.CertificateChain).bytes

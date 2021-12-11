@@ -10,27 +10,27 @@ import CryptoSwift
 
 /// Ticket defines the binary structure of a given ticket file.
 public struct Ticket: Codable {
-    let SignatureType: u32
-    let Signature: [byte]
-    let Padding: [byte]
-    let Issuer: [byte]
-    let ECDHData: [byte]
-    let FileVersion: byte
-    let CACRLVersion: byte
-    let SignerCRLVersion: byte
-    var TitleKey: [byte]
-    let Padding2: byte
-    let TicketID: u64
-    let ConsoleID: u32
-    let TitleID: [byte]
-    let SystemAccessMask: u16
-    let TitleVersion: u16
-    let AccessTitleID: u32
-    let AccessTitleMask: u32
-    let LicenseType: byte
-    let KeyType: KeyTypes
-    let Unknown: [byte]
-    let TimeLimits: [TimeLimitEntry]
+    public var SignatureType: uint32
+    public var Signature: [uint8]
+    public var Padding: [uint8]
+    public var Issuer: [uint8]
+    public var ECDHData: [uint8]
+    public var FileVersion: uint8
+    public var CACRLVersion: uint8
+    public var SignerCRLVersion: uint8
+    public var TitleKey: [uint8]
+    public var Padding2: uint8
+    public var TicketID: uint64
+    public var ConsoleID: uint32
+    public var TitleID: [uint8]
+    public var SystemAccessMask: uint16
+    public var TitleVersion: uint16
+    public var AccessTitleID: uint32
+    public var AccessTitleMask: uint32
+    public var LicenseType: uint8
+    public var KeyType: KeyTypes
+    public var Unknown: [uint8]
+    public var TimeLimits: [TimeLimitEntry]
     
     init(data: Data) throws {
         self.SignatureType = readUint32(data, at: pointer)
@@ -95,12 +95,12 @@ public struct Ticket: Codable {
 
 /// TimeLimitEntry holds a time limit entry for a title.
 public struct TimeLimitEntry: Codable {
-    let code: u32
-    let limit: u32
+    public var code: uint32
+    public var limit: uint32
 }
 
 extension Ticket {
-    func selectCommonKey() -> [byte] {
+    func selectCommonKey() -> [uint8] {
         switch self.KeyType {
         case .common:
             return CommonKey
@@ -134,7 +134,7 @@ extension Ticket {
         let encryptedKey = try encryptor.encrypt(self.TitleKey)
         
         // The data for some reason is 32 bytes instead of 16. We must change that
-        var goodKey: [byte] = []
+        var goodKey: [uint8] = []
         
         for i in 0...15 {
             goodKey.append(encryptedKey[i])
@@ -151,7 +151,7 @@ extension WAD {
         var ticket = self.Ticket
         try ticket.encryptKey()
         
-        var dataArray: [byte] = []
+        var dataArray: [uint8] = []
         
         // I do not know of a way to write the contents of a struct directly to Data so here we are...
         dataArray += withUnsafeBytes(of: ticket.SignatureType) { Array($0) }
