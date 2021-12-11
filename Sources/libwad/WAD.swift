@@ -79,6 +79,8 @@ public func LoadWAD(data: Data) throws -> WAD {
     // Finally, read the meta at the end.
     wad.Meta = readData(data, length: Int(header.MetaSize.bigEndian), at: pointer)
         
+    // Reset pointer
+    pointer = 32
 
     return wad
 }
